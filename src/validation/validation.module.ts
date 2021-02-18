@@ -1,8 +1,7 @@
-import {HttpModule, Module} from "@nestjs/common";
+import {Module} from "@nestjs/common";
 
-import {ValidateCustomNumberWithInjection} from "./number2";
+import {ValidateCustomNumberWithInjection} from "./custom-number-with-injection";
 import {UserModule} from "../user/user.module";
-
 
 @Module({
   imports: [UserModule],

@@ -1,18 +1,17 @@
-import {registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraintInterface} from "class-validator";
+import {registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface} from "class-validator";
 import {Injectable} from "@nestjs/common";
 
 import {UserService} from "../user/user.service";
 
-
-
 @Injectable()
+@ValidatorConstraint()
 export class ValidateCustomNumberWithInjection implements ValidatorConstraintInterface {
   constructor(private userService: UserService) {}
 
   private reason: string;
 
-  public async validate(value: unknown, args: ValidationArguments): Promise<boolean> {
-    this.reason = await this.isValid(value, args);
+  public async validate(value: unknown): Promise<boolean> {
+    this.reason = await this.isValid(value);
     return !this.reason;
   }
 
@@ -20,8 +19,9 @@ export class ValidateCustomNumberWithInjection implements ValidatorConstraintInt
     return this.reason;
   }
 
-  private async isValid(value: unknown, args: ValidationArguments): Promise<string> {
-    return "ValidateCustomNumberWithInjection";
+  private async isValid(value: unknown): Promise<string> {
+    await this.userService.doNothing();
+    return typeof value === "number" ? "" : "Not a number";
   }
 }
 

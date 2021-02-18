@@ -1,18 +1,12 @@
-import {
-  registerDecorator,
-  ValidationArguments,
-  ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from "class-validator";
+import {registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface} from "class-validator";
 
 
 @ValidatorConstraint()
 class ValidateCustomNumber implements ValidatorConstraintInterface {
   private reason: string;
 
-  public validate(value: unknown, args: ValidationArguments): boolean {
-    this.reason = this.isValid(value, args);
+  public validate(value: unknown): boolean {
+    this.reason = this.isValid(value);
     return !this.reason;
   }
 
@@ -20,8 +14,8 @@ class ValidateCustomNumber implements ValidatorConstraintInterface {
     return this.reason;
   }
 
-  private isValid(value: unknown, args: ValidationArguments): string {
-    return "ValidateCustomNumber";
+  private isValid(value: unknown): string {
+    return typeof value === "number" ? "" : "Not a number";
   }
 }
 

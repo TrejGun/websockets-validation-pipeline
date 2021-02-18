@@ -1,29 +1,24 @@
 import {UsePipes} from "@nestjs/common";
-import {MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
-import {Server} from "socket.io";
+import {MessageBody, SubscribeMessage, WebSocketGateway} from "@nestjs/websockets";
 
-import {WsValidationPipe} from "./validation.ws";
-import {CustomSchema, CustomWithInjectionSchema, NativeSchema} from "./events.shemas";
+import {WsValidationPipe} from "../common/pipes/ws.validation";
+import {CustomSchema, CustomWithInjectionSchema, NativeSchema} from "./schemas";
 
 @UsePipes(WsValidationPipe)
 @WebSocketGateway()
 export class EventsGateway {
-  @WebSocketServer()
-  server: Server;
-
   @SubscribeMessage("event")
-  nativeEvent(@MessageBody() data: NativeSchema): Promise<void> {
-    return;
+  nativeEvent(@MessageBody() data: NativeSchema): any {
+    return data;
   }
 
   @SubscribeMessage("custom-event")
-  customEvent(@MessageBody() data: CustomSchema): Promise<void> {
-    return;
+  customEvent(@MessageBody() data: CustomSchema): any {
+    return data;
   }
 
   @SubscribeMessage("custom-event-with-injection")
-  customEventWithInjection(@MessageBody() data: CustomWithInjectionSchema): Promise<void> {
-    return;
+  customEventWithInjection(@MessageBody() data: CustomWithInjectionSchema): any {
+    return data;
   }
-
 }

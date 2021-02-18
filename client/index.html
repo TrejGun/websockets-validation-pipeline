@@ -1,25 +1,33 @@
-<html>
-  <head>
-    <script src="socket.io.js"></script>
+<html lang="en">
+<head>
+    <script
+            src="https://www.unpkg.com/socket.io-client@2.4.0/dist/socket.io.js"
+            type="text/javascript"
+            crossorigin="anonymous"
+    >
+    </script>
     <script>
-      const socket = io('http://localhost:3000');
-      socket.on('connect', function() {
-        console.log('Connected');
+      const socket = io("http://localhost:3000");
 
-        socket.emit('event', { test: 'test' });
+      socket.on("connect", function () {
+        console.log("Connected");
 
-        socket.emit('custom-event', { test: 'test' });
+        socket.emit("event", {test: "test"});
 
-        socket.emit('custom-event-with-injection', { test: 'test' });
+        socket.emit("custom-event", {test: "test"});
+
+        socket.emit("custom-event-with-injection", {test: "test"});
       });
-      socket.on('exception', function(data) {
-        console.log('exception', data);
+
+      socket.on("exception", function (data) {
+        console.log("exception", data);
       });
-      socket.on('disconnect', function() {
-        console.log('Disconnected');
+
+      socket.on("disconnect", function () {
+        console.log("Disconnected");
       });
     </script>
-  </head>
-
-  <body></body>
+    <title>sandbox</title>
+</head>
+<body></body>
 </html>
